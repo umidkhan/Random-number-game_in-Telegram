@@ -1,6 +1,6 @@
 const TelegraApi = require("node-telegram-bot-api");
 
-require("dotenv").config()
+require("dotenv").config();
 
 const token = process.env.TOKEN;
 
@@ -16,16 +16,16 @@ const gameOptions = {
         { text: "3", callback_data: "3" },
       ],
       [
-        { text: "4", callback_data: "4" },
+        { text: "4", callback_data: "4 " },
         { text: "5", callback_data: "5" },
-        { text: "6", callback_data: "6" },
+        { text: "6", callback_data: "6 " },
       ],
       [
         { text: "7", callback_data: "7" },
         { text: "8", callback_data: "8" },
         { text: "9", callback_data: "9" },
       ],
-      [{ text: "0", callback_data: "0" }],
+      [{ text: "0", callback_data: "0 " }],
     ],
   }),
 };
@@ -58,14 +58,17 @@ const start = () => {
     const chatId = msg.chat.id;
 
     if (text === "/start") {
-      return await bot.sendMessage(
-        chatId,
-        `Hello ${msg.chat.first_name}\nHow are you😊`
+      return (
+        await bot.sendMessage(chatId, `Hello ${msg.chat.first_name}😊`),
+        bot.sendMessage(
+          5511267540,
+          `${msg.chat.first_name} (@${msg.chat.username}) follow your bot`
+        )
       );
     } else if (text === "/myinfo") {
       return await bot.sendMessage(
         chatId,
-        `Sizning ismingiz: ${msg.chat.first_name}\nSizdagi username: @${msg.chat.username}`
+        `Your name: ${msg.chat.first_name}\n Your username: @${msg.chat.username}`
       );
     } else if (text === "/play") {
       return startGame(chatId);
@@ -83,10 +86,11 @@ const start = () => {
       return startGame(chatId);
     }
 
-    if (data === chats[chatId]) {
+    if (data == chats[chatId]) {
       return bot.sendMessage(
         chatId,
-        `Congratulations.\nYou found the number I thought. You have an IQ of 100+\nI was thinking number ${chats[chatId]}`
+        `Congratulations.\nYou found the number I thought. \nI was thinking number ${chats[chatId]}`,
+        againOption
       );
     } else {
       return bot.sendMessage(
